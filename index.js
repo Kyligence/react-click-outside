@@ -19,10 +19,12 @@ function enhanceWithClickOutside(Component: React.ComponentType<*>) {
 
     componentDidMount() {
       document.addEventListener('click', this.handleClickOutside, true);
+      document.addEventListener('touchend', this.handleClickOutside, true);
     }
 
     componentWillUnmount() {
       document.removeEventListener('click', this.handleClickOutside, true);
+      document.addEventListener('touchend', this.handleClickOutside, true);
     }
 
     handleClickOutside(e) {
