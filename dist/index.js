@@ -34,14 +34,16 @@ function enhanceWithClickOutside(Component) {
     _createClass(EnhancedComponent, [{
       key: 'componentDidMount',
       value: function componentDidMount() {
-        document.addEventListener('click', this.handleClickOutside, true);
-        document.addEventListener('touchend', this.handleClickOutside, true);
+        var eventName = this.eventName;
+
+        document.addEventListener(eventName, this.handleClickOutside, true);
       }
     }, {
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
-        document.removeEventListener('click', this.handleClickOutside, true);
-        document.addEventListener('touchend', this.handleClickOutside, true);
+        var eventName = this.eventName;
+
+        document.removeEventListener(eventName, this.handleClickOutside, true);
       }
     }, {
       key: 'handleClickOutside',
@@ -67,6 +69,12 @@ function enhanceWithClickOutside(Component) {
             wrappedRef && wrappedRef(c);
           }
         }));
+      }
+    }, {
+      key: 'eventName',
+      get: function get() {
+        var isMobileTouch = 'ontouchend' in document.documentElement;
+        return isMobileTouch ? 'touchend' : 'click';
       }
     }]);
 

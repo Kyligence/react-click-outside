@@ -18,13 +18,18 @@ function enhanceWithClickOutside(Component: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      document.addEventListener('click', this.handleClickOutside, true);
-      document.addEventListener('touchend', this.handleClickOutside, true);
+      const { eventName } = this;
+      document.addEventListener(eventName, this.handleClickOutside, true);
     }
 
     componentWillUnmount() {
-      document.removeEventListener('click', this.handleClickOutside, true);
-      document.addEventListener('touchend', this.handleClickOutside, true);
+      const { eventName } = this;
+      document.removeEventListener(eventName, this.handleClickOutside, true);
+    }
+
+    get eventName() {
+      const isMobileTouch = 'ontouchend' in document.documentElement;
+      return isMobileTouch ? 'touchend' : 'click';
     }
 
     handleClickOutside(e) {
